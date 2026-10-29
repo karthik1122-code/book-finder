@@ -258,6 +258,11 @@ h3,
   cursor: pointer;
 }
 
+.fav-btn:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+
 .fav-btn.saved {
   background: var(--rust);
   color: #fff;

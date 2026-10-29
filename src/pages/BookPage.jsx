@@ -16,7 +16,7 @@ function BookPage() {
 
   // second request for the author's name, only once we know the author key
   const authorKey = data?.authors?.[0]?.author?.key
-  const { data: author } = useFetch(authorKey ? `${API}${authorKey}.json` : null)
+  const { data: author, loading: authorLoading } = useFetch(authorKey ? `${API}${authorKey}.json` : null)
 
   const { favourites, add, remove } = useFavourites()
   const isFavourite = favourites.some((b) => b.id === id)
@@ -73,7 +73,13 @@ function BookPage() {
           <p className="author">{author?.name ?? ' '}</p>
           {year && <p className="year">First published {year}</p>}
 
-          <button type="button" className={isFavourite ? 'fav-btn saved' : 'fav-btn'} onClick={toggleFavourite}>
+          {/* wait for the author's name so the saved favourite isn't "Unknown author" */}
+          <button
+            type="button"
+            className={isFavourite ? 'fav-btn saved' : 'fav-btn'}
+            onClick={toggleFavourite}
+            disabled={authorLoading && !isFavourite}
+          >
             {isFavourite ? '♥ Saved to favourites' : '♡ Save to favourites'}
           </button>
 

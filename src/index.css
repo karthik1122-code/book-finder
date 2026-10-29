@@ -1,0 +1,366 @@
+:root {
+  --green: #1d3b2f;
+  --green-soft: #2f5a47;
+  --paper: #f4efe6;
+  --paper-dark: #e9e1d2;
+  --ink: #2b2620;
+  --muted: #6f665b;
+  --rust: #c2562d;
+  --line: #ddd3c2;
+  --focus: #2563eb;
+
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+a {
+  color: var(--green);
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+h1,
+h2,
+h3,
+.brand {
+  font-family: 'Fraunces', Georgia, serif;
+}
+
+/* navbar */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 2rem;
+  background: var(--green);
+}
+
+.brand {
+  color: var(--paper);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.brand span {
+  color: #e9a27f;
+}
+
+.navbar nav {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.navbar nav a {
+  padding: 0.4rem 0.8rem;
+  border-radius: 2rem;
+  color: var(--paper);
+  text-decoration: none;
+}
+
+.navbar nav a:hover {
+  background: var(--green-soft);
+}
+
+.navbar nav a.active {
+  background: var(--paper);
+  color: var(--green);
+}
+
+.badge {
+  display: inline-block;
+  min-width: 1.4rem;
+  margin-left: 0.25rem;
+  padding: 0 0.4rem;
+  border-radius: 1rem;
+  background: var(--rust);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* page */
+.page {
+  width: min(72rem, 100% - 2rem);
+  margin: 0 auto;
+  padding: 2rem 0 4rem;
+}
+
+.page-title {
+  margin: 0 0 1.25rem;
+  font-size: 2.2rem;
+  color: var(--green);
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 0.9rem 1.1rem;
+  border: 2px solid var(--line);
+  border-radius: 0.75rem;
+  background: #fff;
+  font-size: 1.1rem;
+}
+
+.search-bar input:focus {
+  border-color: var(--green);
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1rem 0 1.5rem;
+}
+
+.filters label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.filters input,
+.filters select {
+  width: 9rem;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  background: #fff;
+  color: var(--ink);
+}
+
+.message {
+  padding: 2rem 0;
+  color: var(--muted);
+  text-align: center;
+}
+
+.message.error {
+  color: #a3361f;
+}
+
+.debug {
+  display: inline-block;
+  margin: 0 0 1rem;
+  padding: 0.2rem 0.6rem;
+  border: 1px dashed var(--muted);
+  border-radius: 0.4rem;
+  color: var(--muted);
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+}
+
+/* book grid */
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: 1.25rem;
+}
+
+.book-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+  background: #fff;
+}
+
+.cover-link img,
+.no-cover {
+  display: block;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  background: var(--paper-dark);
+}
+
+.no-cover {
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  color: var(--green);
+  font-family: 'Fraunces', Georgia, serif;
+  text-align: center;
+}
+
+.book-info {
+  flex: 1;
+  padding: 0.75rem 0.85rem 0;
+}
+
+.book-info h3 {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+.book-info h3 a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.book-info h3 a:hover {
+  text-decoration: underline;
+}
+
+.author {
+  margin: 0.3rem 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.year {
+  margin: 0.2rem 0 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.card-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.75rem 0.85rem;
+}
+
+.fav-btn {
+  padding: 0.35rem 0.8rem;
+  border: 1px solid var(--rust);
+  border-radius: 2rem;
+  background: transparent;
+  color: var(--rust);
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.fav-btn.saved {
+  background: var(--rust);
+  color: #fff;
+}
+
+.render-count {
+  color: var(--muted);
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.7rem;
+}
+
+/* details page */
+.back-link {
+  margin-bottom: 1.25rem;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--green);
+  cursor: pointer;
+}
+
+.book-layout {
+  display: grid;
+  grid-template-columns: 16rem 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.big-cover {
+  width: 100%;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 30px rgba(29, 59, 47, 0.2);
+}
+
+.book-page h1 {
+  margin: 0;
+  font-size: 2.4rem;
+  color: var(--green);
+}
+
+.book-page .author {
+  font-size: 1.1rem;
+}
+
+.book-page .fav-btn {
+  margin-top: 1rem;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.95rem;
+}
+
+.book-page h2 {
+  margin: 2rem 0 0.5rem;
+  font-size: 1.25rem;
+}
+
+.description {
+  max-width: 42rem;
+  line-height: 1.7;
+  white-space: pre-line;
+}
+
+.subjects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.subjects li {
+  padding: 0.25rem 0.7rem;
+  border-radius: 2rem;
+  background: var(--paper-dark);
+  font-size: 0.85rem;
+}
+
+.not-found h1 {
+  margin: 0;
+  font-size: 4rem;
+  color: var(--green);
+}
+
+@media (max-width: 640px) {
+  .navbar {
+    padding: 0.8rem 1rem;
+  }
+
+  .page-title,
+  .book-page h1 {
+    font-size: 1.7rem;
+  }
+
+  .book-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .big-cover {
+    max-width: 14rem;
+  }
+
+  .book-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+}

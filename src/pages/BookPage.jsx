@@ -12,7 +12,7 @@ function getDescription(description) {
 function BookPage() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { data, loading, error } = useFetch(`${API}/works/${id}.json`)
+  const { data, loading, error, retry } = useFetch(`${API}/works/${id}.json`)
 
   // second request for the author's name, only once we know the author key
   const authorKey = data?.authors?.[0]?.author?.key
@@ -27,7 +27,14 @@ function BookPage() {
     return (
       <div className="message">
         <p>{error === 'Not found' ? "We couldn't find that book." : `Couldn't load this book. ${error}`}</p>
-        <Link to="/">Back to search</Link>
+        {error !== 'Not found' && (
+          <button type="button" className="retry-btn" onClick={retry}>
+            Try again
+          </button>
+        )}
+        <p>
+          <Link to="/">Back to search</Link>
+        </p>
       </div>
     )
   }

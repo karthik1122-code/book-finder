@@ -30,7 +30,7 @@ function SearchPage() {
   const url = query
     ? `${API}/search.json?q=${encodeURIComponent(query)}&limit=20&fields=key,title,author_name,first_publish_year,cover_i`
     : null
-  const { data, loading, error } = useFetch(url)
+  const { data, loading, error, retry } = useFetch(url)
 
   // only re-sorts/filters when the results or the filters change,
   // not when something unrelated (like favourites) changes
@@ -93,7 +93,14 @@ function SearchPage() {
 
       {!query && <p className="message">Start typing to search millions of books from Open Library.</p>}
       {loading && <p className="message">Searching for “{query}”…</p>}
-      {error && <p className="message error">Couldn't load results. {error}</p>}
+      {error && (
+        <div className="message error">
+          <p>Couldn't load results. {error}</p>
+          <button type="button" className="retry-btn" onClick={retry}>
+            Try again
+          </button>
+        </div>
+      )}
 
       {data && books.length === 0 && (
         <p className="message">

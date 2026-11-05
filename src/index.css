@@ -163,6 +163,23 @@ h3,
   color: #a3361f;
 }
 
+.message p {
+  margin: 0 0 0.75rem;
+}
+
+.retry-btn {
+  padding: 0.45rem 1rem;
+  border: 1px solid var(--green);
+  border-radius: 2rem;
+  background: var(--green);
+  color: var(--paper);
+  cursor: pointer;
+}
+
+.retry-btn:hover {
+  background: var(--green-soft);
+}
+
 .debug {
   display: inline-block;
   margin: 0 0 1rem;

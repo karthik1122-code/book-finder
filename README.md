@@ -45,6 +45,18 @@ I tested this by slowing down the request for "harry" by 3 seconds and then sear
 
 **Network tab:** see `screenshots/network.png`. It shows that typing a full word sends a single `search.json` request.
 
+## When Open Library is having a bad day
+
+Open Library is a free service and sometimes drops requests when it's busy. In early November about half my test requests failed. In the browser that shows up as a **CORS error**, because the error response doesn't carry the `Access-Control-Allow-Origin` header, even though the real problem is on their side.
+
+So `fetchWithRetry` inside `useFetch` handles it:
+- a network error or a 5xx is **retried up to 2 more times** (after 1s, then 2s)
+- a 404 is **not** retried ("We couldn't find that book" straight away)
+- if every try fails, the page says *Open Library isn't responding right now* with a **Try again** button
+- the retry wait uses the same `AbortController`, so changing the search cancels a retry that's still waiting. Old results still can't show up.
+
+When Open Library answers the first time (most of the time), typing a word still sends exactly **one** request.
+
 ## Proving the memoisation works
 
 Every card shows `renders: N` and the list shows `Results list renders: N`.

@@ -1,3 +1,7 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [
+    { "source": "/ol/:path*", "destination": "https://openlibrary.org/:path*" },
+    { "source": "/covers/:path*", "destination": "https://covers.openlibrary.org/:path*" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }

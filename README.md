@@ -1,6 +1,6 @@
 # Book Finder
 
-Search books from the [Open Library API](https://openlibrary.org/developers/api), open a book's details page and save favourites that show up on every page.
+Search books from the [Open Library API](https://openlibrary.org/developers/api) (through our own domain, see below), open a book's details page and save favourites that show up on every page.
 
 **Live:** https://book-finder-karthik.vercel.app
 
@@ -44,6 +44,20 @@ src/
 I tested this by slowing down the request for "harry" by 3 seconds and then searching "dune" straight away. Only the Dune results ever showed up.
 
 **Network tab:** see `screenshots/network.png`. It shows that typing a full word sends a single `search.json` request.
+
+## Requests go through our own domain
+
+The app doesn't call `openlibrary.org` from the browser. It calls its own site:
+
+| The app requests | Forwarded to |
+| --- | --- |
+| `/ol/search.json?q=...` | `https://openlibrary.org/search.json?q=...` |
+| `/ol/works/OL893414W.json` | `https://openlibrary.org/works/OL893414W.json` |
+| `/covers/b/id/123-M.jpg` | `https://covers.openlibrary.org/b/id/123-M.jpg` |
+
+On Vercel, the `rewrites` in `vercel.json` do the forwarding from Vercel's servers. In development, the `proxy` in `vite.config.js` does the same.
+
+Why: some internet providers block `openlibrary.org` (it's run by the Internet Archive), so for those users every search failed and the browser just reported a CORS / network error. Now the browser only ever talks to our own domain. That also means the requests are same-origin, so CORS doesn't come into it at all.
 
 ## When Open Library is having a bad day
 

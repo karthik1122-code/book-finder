@@ -1,7 +1,8 @@
-export const API = 'https://openlibrary.org'
+// same-origin paths, forwarded to openlibrary.org (see vercel.json / vite.config.js)
+export const API = '/ol'
 
 export function coverUrl(coverId, size = 'M') {
-  return coverId ? `https://covers.openlibrary.org/b/id/${coverId}-${size}.jpg` : null
+  return coverId ? `/covers/b/id/${coverId}-${size}.jpg` : null
 }
 
 // search results come back with key: "/works/OL893414W", we only want the id part

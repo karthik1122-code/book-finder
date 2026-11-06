@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useFavourites } from '../context/FavouritesContext'
+import { useFavourites } from '../context/useFavourites'
 import BookList from '../components/BookList'
 
 function FavouritesPage() {

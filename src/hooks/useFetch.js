@@ -33,47 +33,44 @@ async function fetchWithRetry(url, signal) {
 }
 
 export function useFetch(url) {
-  const [data, setData] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
   const [attempt, setAttempt] = useState(0) // bumped by retry() to run the effect again
+  // the last finished request: which one it was (key) and what it gave back
+  const [result, setResult] = useState({ key: null, data: null, error: null })
+
+  const key = url ? `${url}#${attempt}` : null
 
   useEffect(() => {
-    if (!url) {
-      setData(null)
-      setLoading(false)
-      setError(null)
-      return
-    }
+    if (!url) return
 
     const controller = new AbortController()
-    setData(null) // don't keep showing the last search's results
-    setLoading(true)
-    setError(null)
 
     fetchWithRetry(url, controller.signal)
-      .then((json) => {
-        setData(json)
-        setLoading(false)
-      })
+      .then((json) => setResult({ key, data: json, error: null }))
       .catch((err) => {
         // aborted on purpose because the url changed, so ignore it
         if (err.name === 'AbortError') return
-        setError(
+        const message =
           err.message === 'Failed to fetch' || err.message.startsWith('Server error')
             ? "Open Library isn't responding right now."
-            : err.message,
-        )
-        setLoading(false)
+            : err.message
+        setResult({ key, data: null, error: message })
       })
 
     // When the url changes (or the component unmounts) the old request is
     // cancelled, so a slow old search can never overwrite newer results.
     // This also cancels any retry that's still waiting.
     return () => controller.abort()
-  }, [url, attempt])
+  }, [url, key])
 
   const retry = useCallback(() => setAttempt((n) => n + 1), [])
 
-  return { data, loading, error, retry }
+  // Only use the stored result if it belongs to the current url. Otherwise we're
+  // still waiting, so we never flash the previous search's books.
+  const done = key !== null && result.key === key
+  return {
+    data: done ? result.data : null,
+    loading: key !== null && !done,
+    error: done ? result.error : null,
+    retry,
+  }
 }

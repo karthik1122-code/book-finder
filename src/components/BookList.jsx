@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useRef } from 'react'
 import BookCard from './BookCard'
-import { useFavourites } from '../context/FavouritesContext'
+import { useFavourites } from '../context/useFavourites'
 
 function BookList({ books, label = 'Results list' }) {
   const { favourites, add, remove } = useFavourites()

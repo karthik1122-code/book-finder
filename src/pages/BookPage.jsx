@@ -1,6 +1,6 @@
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
 import { useFetch } from '../hooks/useFetch'
-import { useFavourites } from '../context/FavouritesContext'
+import { useFavourites } from '../context/useFavourites'
 import { API, coverUrl } from '../books'
 
 function getDescription(description) {

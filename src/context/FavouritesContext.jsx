@@ -1,6 +1,5 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
-
-const FavouritesContext = createContext(null)
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { FavouritesContext } from './useFavourites'
 
 function loadSaved() {
   try {
@@ -33,10 +32,4 @@ export function FavouritesProvider({ children }) {
   const value = useMemo(() => ({ favourites, add, remove }), [favourites, add, remove])
 
   return <FavouritesContext.Provider value={value}>{children}</FavouritesContext.Provider>
-}
-
-export function useFavourites() {
-  const context = useContext(FavouritesContext)
-  if (!context) throw new Error('useFavourites must be used inside FavouritesProvider')
-  return context
 }
